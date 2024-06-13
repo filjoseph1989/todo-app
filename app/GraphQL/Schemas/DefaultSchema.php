@@ -2,8 +2,10 @@
 
 namespace App\GraphQL\Schemas;
 
+use App\GraphQL\Queries\TaskQuery;
 use App\GraphQL\Queries\UsersQuery;
 use App\GraphQL\Types\UserType;
+use App\GraphQL\Types\TaskType;
 use Rebing\GraphQL\Support\Contracts\ConfigConvertible;
 
 class DefaultSchema implements ConfigConvertible
@@ -12,10 +14,12 @@ class DefaultSchema implements ConfigConvertible
     {
         return [
             'types' => [
-                UserType::class
+                UserType::class,
+                TaskType::class
             ],
             'query' => [
                 UsersQuery::class,
+                TaskQuery::class,
             ],
             'mutation' => [
                 // ExampleMutation::class,
