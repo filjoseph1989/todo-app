@@ -2,6 +2,9 @@
 
 namespace App\GraphQL\Schemas;
 
+use App\GraphQL\Mutations\CreateTaskMutation;
+use App\GraphQL\Mutations\DeleteTaskMutation;
+use App\GraphQL\Mutations\UpdateTaskMutation;
 use App\GraphQL\Queries\TaskQuery;
 use App\GraphQL\Queries\UsersQuery;
 use App\GraphQL\Types\UserType;
@@ -22,7 +25,9 @@ class DefaultSchema implements ConfigConvertible
                 TaskQuery::class,
             ],
             'mutation' => [
-                // ExampleMutation::class,
+                UpdateTaskMutation::class,
+                CreateTaskMutation::class,
+                DeleteTaskMutation::class,
             ],
             'method' => ['GET', 'POST'],
         ];
