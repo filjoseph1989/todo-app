@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\GraphQL\Mutations;
 
-use App\Models\Task;
 use Closure;
+use App\Models\Task;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
 use Rebing\GraphQL\Support\Mutation;
@@ -42,7 +42,7 @@ class DeleteTaskMutation extends Mutation
         }
 
         $task->delete();
-        
+
         return true;
     }
 }

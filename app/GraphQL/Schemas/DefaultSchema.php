@@ -18,7 +18,7 @@ class DefaultSchema implements ConfigConvertible
         return [
             'types' => [
                 UserType::class,
-                TaskType::class
+                TaskType::class,
             ],
             'query' => [
                 UsersQuery::class,

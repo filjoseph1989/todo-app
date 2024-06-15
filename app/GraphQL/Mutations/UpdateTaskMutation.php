@@ -4,20 +4,16 @@ declare(strict_types=1);
 
 namespace App\GraphQL\Mutations;
 
-use App\Models\Task;
 use Closure;
-use App\GraphQL\Traits\TaskEnumTrait;
+use App\Models\Task;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
 use Laragraph\Utils\BadRequestGraphQLException;
 use Rebing\GraphQL\Support\Facades\GraphQL;
 use Rebing\GraphQL\Support\Mutation;
-use Rebing\GraphQL\Support\SelectFields;
 
 class UpdateTaskMutation extends Mutation
 {
-    use TaskEnumTrait;
-
     protected $attributes = [
         'name' => 'updateTask',
         'description' => 'A mutation for updating a task',
@@ -50,7 +46,7 @@ class UpdateTaskMutation extends Mutation
                 'description' => 'The task to be updated',
             ],
             'status' => [
-                'type' => Type::nonNull($this->taskStatusType()),
+                'type' => Type::nonNull(Type::string()),
                 'description' => 'The status of the task',
             ]
         ];

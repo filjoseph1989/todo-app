@@ -51,7 +51,17 @@ class TaskQuery extends Query
         ];
     }
 
-    public function resolve($root, array $args, $context, ResolveInfo $resolveInfo, Closure $getSelectFields)
+    /**
+     * Resolves the query and returns the tasks based on the given arguments.
+     *
+     * @param mixed $root The root value of the query.
+     * @param array $args The arguments passed to the query.
+     * @param mixed $context The context value of the query.
+     * @param ResolveInfo $resolveInfo The information about the query.
+     * @param Closure $getSelectFields A function to get the selected fields.
+     * @return mixed The tasks that match the given arguments.
+     */
+    public function resolve($root, array $args, $context, ResolveInfo $resolveInfo, Closure $getSelectFields): mixed
     {
         $query = Task::query();
 
