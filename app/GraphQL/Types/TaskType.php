@@ -39,6 +39,10 @@ class TaskType extends GraphQLType
                 'type' => $taskStatusType,
                 'description' => 'The status of the task',
             ],
+            'user_id' => [
+                'type' => Type::nonNull(Type::id()),
+                'description' => 'The id of the user',
+            ],
             'user' => [
                 'type' => Type::nonNull(GraphQL::type('User')),
                 'description' => 'The user of the task',
