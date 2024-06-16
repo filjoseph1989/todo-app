@@ -96,8 +96,11 @@ class UpdateTaskMutation extends Mutation
             throw new BadRequestGraphQLException('Task not found');
         }
 
-        unset($args['id']);
+        if ($task->user_id !== $args['user_id']) {
+            throw new BadRequestGraphQLException('You are not authorized to update this task');
+        }
 
+        unset($args['id']);
         $task->fill($args);
         $task->save();
 
