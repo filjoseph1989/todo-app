@@ -20,7 +20,7 @@ class LoginMutation extends Mutation
 
     public function type(): Type
     {
-        return Type::nonNull(GraphQL::type('Login'));
+        return GraphQL::type('Login');
     }
 
     /**
@@ -75,8 +75,16 @@ class LoginMutation extends Mutation
 
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
-            $token = $user->createToken('GraphQL', ['expires_in' => now()->addHour()])->accessToken;
-            return $token;
+            $token = $user->createToken('GraphQL', ['expires_in' => now()->addHour()]);
+
+            return [
+                'id' => $user->id,
+                'abilities' => $token->accessToken->abilities,
+                'expires_at' => $token->accessToken->expires_at,
+                'tokenable_id' => $token->accessToken->tokenable_id,
+                'tokenable_type' => $token->accessToken->tokenable_type,
+                'token' => $token->plainTextToken,
+            ];
         }
 
         return null;

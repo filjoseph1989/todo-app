@@ -38,7 +38,7 @@ class LoginType extends GraphQLType
                 'type' => Type::nonNull(Type::string()),
                 'description' => 'The abilities of the user',
                 'resolve' => function ($root) {
-                    return json_encode($root->abilities);
+                    return json_encode($root['abilities']);
                 }
             ],
             'expires_at' => [
