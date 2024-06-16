@@ -30,6 +30,7 @@ class DefaultSchema implements ConfigConvertible
                 DeleteTaskMutation::class,
             ],
             'method' => ['GET', 'POST'],
+            'middleware' => ['auth:sanctum'],
         ];
     }
 }
