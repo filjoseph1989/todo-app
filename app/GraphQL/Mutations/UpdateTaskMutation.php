@@ -58,6 +58,16 @@ class UpdateTaskMutation extends Mutation
         ];
     }
 
+    protected function rules(array $args = []): array
+    {
+        return [
+            'id' => ['required'],
+            'task' => ['required'],
+            'status' => ['required'],
+            'user_id' => ['required'],
+        ];
+    }
+
     /**
      * Resolves the mutation and returns the updated task.
      *
