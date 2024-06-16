@@ -9,9 +9,10 @@ use App\Models\Task;
 use App\GraphQL\Traits\TaskEnumTrait;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 use Rebing\GraphQL\Support\Facades\GraphQL;
 use Rebing\GraphQL\Support\Mutation;
-use Rebing\GraphQL\Support\SelectFields;
 
 class CreateTaskMutation extends Mutation
 {
@@ -63,6 +64,15 @@ class CreateTaskMutation extends Mutation
      */
     public function resolve($root, array $args, $context, ResolveInfo $resolveInfo, Closure $getSelectFields): Task
     {
+        $validator = Validator::make($args, [
+            'task' => 'required|string|max:255',
+            'user_id' => 'required|integer|exists:users,id',
+        ]);
+
+        if ($validator->fails()) {
+            throw new ValidationException($validator);
+        }
+
         $task = Task::create([
             'task' => $args['task'],
             'user_id' => $args['user_id'],

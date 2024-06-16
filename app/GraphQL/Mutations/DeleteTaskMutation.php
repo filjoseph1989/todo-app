@@ -8,8 +8,10 @@ use Closure;
 use App\Models\Task;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
+use Laragraph\Utils\BadRequestGraphQLException;
 use Rebing\GraphQL\Support\Mutation;
-use Rebing\GraphQL\Support\SelectFields;
 
 class DeleteTaskMutation extends Mutation
 {
@@ -23,6 +25,11 @@ class DeleteTaskMutation extends Mutation
         return Type::boolean();
     }
 
+    /**
+     * Get the arguments for the mutation.
+     *
+     * @return array<string, \GraphQL\Type\Definition\Argument>
+     */
     public function args(): array
     {
         return [
@@ -33,12 +40,30 @@ class DeleteTaskMutation extends Mutation
         ];
     }
 
-    public function resolve($root, array $args, $context, ResolveInfo $resolveInfo, Closure $getSelectFields)
+    /**
+     * Resolves the mutation and deletes a task.
+     *
+     * @param mixed $root The root value of the mutation.
+     * @param array $args The arguments passed to the mutation.
+     * @param mixed $context The context value of the mutation.
+     * @param ResolveInfo $resolveInfo Information about the resolver.
+     * @param Closure $getSelectFields A function to get the selected fields.
+     * @return bool True if the task was deleted, false otherwise.
+     */
+    public function resolve($root, array $args, $context, ResolveInfo $resolveInfo, Closure $getSelectFields): bool
     {
+        $validator = Validator::make($args, [
+            'id' => 'required|integer|exists:tasks,id',
+        ]);
+
+        if ($validator->fails()) {
+            throw new ValidationException($validator);
+        }
+
         $task = Task::find($args['id']);
 
         if (!$task) {
-            throw new \Exception("Task not found");
+            throw new BadRequestGraphQLException("Task not found");
         }
 
         $task->delete();

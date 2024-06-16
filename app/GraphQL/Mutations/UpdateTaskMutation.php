@@ -8,6 +8,8 @@ use Closure;
 use App\Models\Task;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 use Laragraph\Utils\BadRequestGraphQLException;
 use Rebing\GraphQL\Support\Facades\GraphQL;
 use Rebing\GraphQL\Support\Mutation;
@@ -64,6 +66,16 @@ class UpdateTaskMutation extends Mutation
      */
     public function resolve($root, array $args, $context, ResolveInfo $resolveInfo, Closure $getSelectFields): mixed
     {
+        $validator = Validator::make($args, [
+            'task' => 'required|string',
+            'status' => 'required|string',
+            'user_id' => 'required|integer|exists:users,id',
+        ]);
+
+        if ($validator->fails()) {
+            throw new ValidationException($validator);
+        }
+
         $task = Task::find($args['id']);
 
         if (!$task) {
