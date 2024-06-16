@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types = 1);
+use App\GraphQL\Schemas\AuthSchema;
 use App\GraphQL\Schemas\DefaultSchema;
 
 return [
@@ -98,6 +99,7 @@ return [
     // ],
     'schemas' => [
         'default' => DefaultSchema::class,
+        'auth' => AuthSchema::class,
     ],
 
     // The global types available to all schemas.
