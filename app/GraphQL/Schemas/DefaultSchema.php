@@ -4,9 +4,11 @@ namespace App\GraphQL\Schemas;
 
 use App\GraphQL\Mutations\CreateTaskMutation;
 use App\GraphQL\Mutations\DeleteTaskMutation;
+use App\GraphQL\Mutations\LoginMutation;
 use App\GraphQL\Mutations\UpdateTaskMutation;
 use App\GraphQL\Queries\TaskQuery;
 use App\GraphQL\Queries\UsersQuery;
+use App\GraphQL\Types\LogoutType;
 use App\GraphQL\Types\UserType;
 use App\GraphQL\Types\TaskType;
 use Rebing\GraphQL\Support\Contracts\ConfigConvertible;
@@ -19,6 +21,7 @@ class DefaultSchema implements ConfigConvertible
             'types' => [
                 UserType::class,
                 TaskType::class,
+                LogoutType::class,
             ],
             'query' => [
                 UsersQuery::class,
@@ -28,6 +31,7 @@ class DefaultSchema implements ConfigConvertible
                 UpdateTaskMutation::class,
                 CreateTaskMutation::class,
                 DeleteTaskMutation::class,
+                LoginMutation::class,
             ],
             'method' => ['GET', 'POST'],
             'middleware' => ['auth:sanctum'],
