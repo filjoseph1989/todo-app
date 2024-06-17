@@ -27,7 +27,7 @@ describe('login', function () {
                 }
             GQL;
 
-            $response = $this->postJson('/graphql', [
+            $response = $this->postJson('/graphql/auth', [
                 'query' => $query,
             ]);
 
@@ -76,7 +76,7 @@ describe('login', function () {
                 }
             GQL;
 
-            $response = $this->postJson('/graphql', [
+            $response = $this->postJson('/graphql/auth', [
                 'query' => $query,
             ]);
 
@@ -107,7 +107,7 @@ describe('login', function () {
                 }
             GQL;
 
-            $response = $this->postJson('/graphql', [
+            $response = $this->postJson('/graphql/auth', [
                 'query' => $query,
             ]);
 
