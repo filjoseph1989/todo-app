@@ -6,8 +6,10 @@ describe('LogoutTest', function () {
         $this->user = User::factory()->create();
 
         $query = <<<GQL
-            mutation {
-                logout
+            mutation Login {
+                login(email: "{$this->user->email}", password: "password") {
+                    token
+                }
             }
         GQL;
 
@@ -31,10 +33,38 @@ describe('LogoutTest', function () {
             }
         GQL;
 
-        $response = $this->postJson('/graphql/auth', [
+        $response = $this->postJson('/graphql', [
             'query' => $query,
+        ], [
+            'Authorization' => 'Bearer ' . $this->token,
         ]);
 
         $response->assertStatus(200);
+    });
+
+    it('returns a message after logout', function () {
+        $query = <<<GQL
+            mutation {
+                logout {
+                    message
+                }
+            }
+        GQL;
+
+        $response = $this->postJson('/graphql', [
+            'query' => $query,
+        ], [
+            'Authorization' => 'Bearer ' . $this->token,
+        ]);
+
+        $response->assertStatus(200);
+
+        $response->assertJson([
+            'data' => [
+                'logout' => [
+                    'message' => 'Successfully logged out',
+                ],
+            ],
+        ]);
     });
 });

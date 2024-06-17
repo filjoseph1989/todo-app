@@ -10,7 +10,6 @@ use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
 use Rebing\GraphQL\Support\Facades\GraphQL;
 use Rebing\GraphQL\Support\Mutation;
-use Rebing\GraphQL\Support\SelectFields;
 
 class LogoutMutation extends Mutation
 {
@@ -32,7 +31,7 @@ class LogoutMutation extends Mutation
     public function resolve($root, array $args, $context, ResolveInfo $resolveInfo, Closure $getSelectFields)
     {
         if ($user = Auth::user()) {
-            $user->currentAccessToken()->delete();
+            $user->tokens()->delete();
 
             return [ 'message' => 'Successfully logged out' ];
         }

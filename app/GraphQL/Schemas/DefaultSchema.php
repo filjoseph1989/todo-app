@@ -4,7 +4,7 @@ namespace App\GraphQL\Schemas;
 
 use App\GraphQL\Mutations\CreateTaskMutation;
 use App\GraphQL\Mutations\DeleteTaskMutation;
-use App\GraphQL\Mutations\LoginMutation;
+use App\GraphQL\Mutations\LogoutMutation;
 use App\GraphQL\Mutations\UpdateTaskMutation;
 use App\GraphQL\Queries\TaskQuery;
 use App\GraphQL\Queries\UsersQuery;
@@ -31,7 +31,7 @@ class DefaultSchema implements ConfigConvertible
                 UpdateTaskMutation::class,
                 CreateTaskMutation::class,
                 DeleteTaskMutation::class,
-                LoginMutation::class,
+                LogoutMutation::class,
             ],
             'method' => ['GET', 'POST'],
             'middleware' => ['auth:sanctum'],

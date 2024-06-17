@@ -17,7 +17,7 @@ class LogoutType extends GraphQLType
     public function fields(): array
     {
         return [
-            'success' => [
+            'message' => [
                 'type' => Type::nonNull(Type::string()),
                 'description' => 'Indicates whether the logout was successful',
             ],

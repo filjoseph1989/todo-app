@@ -3,7 +3,7 @@
 use DB;
 use App\Models\User;
 
-describe('UpdateTaskTest', function () {
+describe('CreateTaskTest', function () {
     beforeEach(function () {
         $this->user = User::factory()->create();
 
