@@ -52,7 +52,7 @@ class UpdateTaskMutation extends Mutation
                 'description' => 'The status of the task',
             ],
             'user_id' => [
-                'type' => Type::nonNull(Type::string()),
+                'type' => Type::nonNull(Type::Id()),
                 'description' => 'The user id of the task',
             ]
         ];

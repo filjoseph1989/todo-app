@@ -36,7 +36,19 @@ class DeleteTaskMutation extends Mutation
             'id' => [
                 'type' => Type::nonNull(Type::id()),
                 'description' => 'The id of the task to delete',
+            ],
+            'user_id' => [
+                'type' => Type::nonNull(Type::id()),
+                'description' => 'The id of the user',
             ]
+        ];
+    }
+
+    protected function rules(array $args = []): array
+    {
+        return [
+            'id' => 'required|integer|exists:tasks,id',
+            'user_id' => 'required|integer|exists:users,id',
         ];
     }
 
@@ -60,7 +72,9 @@ class DeleteTaskMutation extends Mutation
             throw new ValidationException($validator);
         }
 
-        $task = Task::find($args['id']);
+        $task = Task::where('id', $args['id'])
+            ->where('user_id', $args['user_id'])
+            ->first();
 
         if (!$task) {
             throw new BadRequestGraphQLException("Task not found");
