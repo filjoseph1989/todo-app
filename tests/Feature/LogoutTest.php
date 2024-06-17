@@ -26,26 +26,10 @@ describe('LogoutTest', function () {
         User::where('email', $this->user->email)->delete();
     });
 
-    it('can logout', function () {
-        $query = <<<GQL
-            mutation {
-                logout
-            }
-        GQL;
-
-        $response = $this->postJson('/graphql', [
-            'query' => $query,
-        ], [
-            'Authorization' => 'Bearer ' . $this->token,
-        ]);
-
-        $response->assertStatus(200);
-    });
-
     it('returns a message after logout', function () {
         $query = <<<GQL
-            mutation {
-                logout {
+            mutation Logout {
+                logout(user_id: "{$this->user->id}") {
                     message
                 }
             }
@@ -63,6 +47,32 @@ describe('LogoutTest', function () {
             'data' => [
                 'logout' => [
                     'message' => 'Successfully logged out',
+                ],
+            ],
+        ]);
+    });
+
+    it('will not logout if wrong user if', function () {
+        $query = <<<GQL
+            mutation Logout {
+                logout(user_id: "1000") {
+                    message
+                }
+            }
+        GQL;
+
+        $response = $this->postJson('/graphql', [
+            'query' => $query,
+        ], [
+            'Authorization' => 'Bearer ' . $this->token,
+        ]);
+
+        $response->assertStatus(200);
+
+        $response->assertJson([
+            'data' => [
+                'logout' => [
+                    'message' => 'User not authenticated',
                 ],
             ],
         ]);

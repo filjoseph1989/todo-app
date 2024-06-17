@@ -25,17 +25,24 @@ class LogoutMutation extends Mutation
 
     public function args(): array
     {
-        return [];
+        return [
+            'user_id' => [
+                'type' => Type::nonNull(Type::id()),
+                'description' => 'The id of the user',
+            ]
+        ];
     }
 
     public function resolve($root, array $args, $context, ResolveInfo $resolveInfo, Closure $getSelectFields)
     {
-        if ($user = Auth::user()) {
+        $userId = $args['user_id'];
+        $user = Auth::user();
+
+        if ($user && $user->id === (int)$userId) {
             $user->tokens()->delete();
-
             return [ 'message' => 'Successfully logged out' ];
+        } else {
+            return [ 'message' => 'User not authenticated' ];
         }
-
-        return [ 'message' => 'User not authenticated' ];
     }
 }
