@@ -15,14 +15,13 @@ The application follows Laravel's best practices and is designed to be easy to e
 
 To get started with Todo App, follow these steps:
 
-1. Clone the repository: `git clone https://github.com/your-username/todo-app.git`
-2. Navigate to the project directory: `cd todo-app`
-3. Install dependencies: `composer install`
-4. Copy the environment file: `cp .env.example .env`
-5. Generate an application key: `php artisan key:generate`
-6. Create a database and update the `.env` file with your database credentials.
-7. Migrate the database: `php artisan migrate`
-8. Run the application: `php artisan serve`
+1. Navigate to the project directory: `cd todo-app`
+1. Install dependencies: `composer install`
+1. Copy the environment file: `cp .env.example .env`
+1. Generate an application key: `php artisan key:generate`
+1. Create a database and update the `.env` file with your database credentials.
+1. Migrate the database: `php artisan migrate --seed`
+1. Run the application: `php artisan serve`
 
 ### Installation
 
@@ -74,6 +73,20 @@ To test a specific test, for example, run the following command:
   ```
 
 More conprehensive discussion visit [https://laravel.com/docs/11.x/testing](/https://laravel.com/docs/11.x/testing)
+
+### Running testing server
+
+To run the testing server, use the following command in your terminal:
+
+```cmd
+php artisan serve
+```
+
+When you run `php artisan serve`, it starts the Laravel development server. The server runs on `http://localhost:8000` by default. You can access your Laravel application through this URL.
+
+The server provides a convenient way to develop and test your application locally. It automatically reloads the PHP code whenever you make changes to the code.
+
+Note: It's important to stop the server using `Ctrl + C` in the terminal when you're done testing or developing.
 
 ## Details
 
