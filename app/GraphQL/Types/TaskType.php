@@ -4,7 +4,6 @@ namespace App\GraphQL\Types;
 
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
-use GraphQL\Type\Definition\EnumType;
 use Rebing\GraphQL\Support\Facades\GraphQL;
 use Rebing\GraphQL\Support\Type as GraphQLType;
 
@@ -18,14 +17,6 @@ class TaskType extends GraphQLType
 
     public function fields(): array
     {
-        $taskStatusType = new EnumType([
-            'name' => 'TaskStatus',
-            'values' => [
-                'TODO' => ['value' => 'todo'],
-                'DONE' => ['value' => 'done'],
-            ],
-        ]);
-
         return [
             'id' => [
                 'type' => Type::nonNull(Type::id()),
@@ -36,7 +27,7 @@ class TaskType extends GraphQLType
                 'description' => 'The task',
             ],
             'status' => [
-                'type' => $taskStatusType,
+                'type' => Type::string(),
                 'description' => 'The status of the task',
             ],
             'user_id' => [
@@ -65,6 +56,7 @@ class TaskType extends GraphQLType
         switch ($field) {
             case 'id':
             case 'task':
+                return $root->{$field};
             case 'status':
                 return $root->{$field};
             case 'user':

@@ -46,7 +46,7 @@ class CreateTaskMutation extends Mutation
                 'description' => 'The task to be updated',
             ],
             'user_id' => [
-                'type' => Type::nonNull(Type::string()),
+                'type' => Type::nonNull(Type::id()),
                 'description' => 'The user id of the task',
             ]
         ];

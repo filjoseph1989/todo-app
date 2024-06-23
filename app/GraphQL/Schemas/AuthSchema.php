@@ -19,7 +19,7 @@ class AuthSchema implements ConfigConvertible
             'mutation' => [
                 LoginMutation::class,
             ],
-            'method' => ['GET', 'POST'],
+            'method' => ['POST'],
         ];
     }
 }
